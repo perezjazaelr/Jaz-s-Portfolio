@@ -1,0 +1,9 @@
+﻿[
+  {
+    "title": "Sample Project",
+    "description": "A short description of what this project does.",
+    "url": "https://example.com",
+    "tags": ["HTML","CSS","JavaScript"],
+    "image": "assets/img/projects/sample.jpg"
+  }
+]
