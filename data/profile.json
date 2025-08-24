@@ -1,0 +1,10 @@
+﻿{
+  "name": "Your Name",
+  "role": "Software Developer",
+  "email": "you@example.com",
+  "location": "City, Country",
+  "social": {
+    "github": "https://github.com/yourhandle",
+    "linkedin": "https://www.linkedin.com/in/yourhandle/"
+  }
+}

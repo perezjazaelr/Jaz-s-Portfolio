@@ -1,0 +1,9 @@
+﻿[
+  {
+    "title": "LAMBEosaurus - PHP Learning Platform",
+    "description": "A comprehensive PHP learning platform featuring tutorials on PHP fundamentals, operators, control statements, arrays, functions, OOP, web development, AJAX, XML, and advanced concepts. Built with PHP and modern web technologies to provide an interactive learning experience for developers.",
+    "url": "https://lambesourus.netlify.app/",
+    "tags": ["PHP", "Web Development", "Education", "Tutorials", "Backend"],
+    "image": "assets/img/projects/lambepic.png"
+  }
+]
