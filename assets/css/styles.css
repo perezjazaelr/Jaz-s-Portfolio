@@ -154,21 +154,13 @@ h3 {
 /* ===================== HERO SECTION ===================== */
 .hero { 
   display: grid; 
-  grid-template-columns: 140px minmax(0, 1fr); 
+  grid-template-columns: 1fr; 
   align-items: center; 
   gap: 24px; 
   padding: 48px 0; 
 }
 
-.hero img { 
-  width: clamp(72px, 18vw, 120px); 
-  height: clamp(72px, 18vw, 120px); 
-  border-radius: 12px; 
-  background: var(--card);
-  transition: transform var(--duration-medium) var(--ease-out);
-}
-
-/* Ensure hero text block stacks nicely and stays to the right column */
+/* Ensure hero text block stacks nicely */
 .hero > div { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .hero .hero-actions { 
   display: flex; 
@@ -181,9 +173,7 @@ h3 {
 .hero .hero-actions .btn { height: 44px; padding: 0 18px; line-height: 1; }
 .hero p { margin: 4px 0 0; }
 
-.hero img:hover {
-  transform: scale(1.05) rotate(2deg);
-}
+/* Avatar image removed */
 
 /* ===================== BUTTONS ===================== */
 .btn { 

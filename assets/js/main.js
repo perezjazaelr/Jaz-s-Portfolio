@@ -82,6 +82,9 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
 const form = document.getElementById('contact-form');
 if (form) {
   const status = document.getElementById('form-status');
+  const submitBtn = document.getElementById('contact-submit');
+  const endpointEl = document.getElementById('contact-endpoint');
+  const endpoint = endpointEl ? endpointEl.value : '';
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     let valid = true;
@@ -93,7 +96,45 @@ if (form) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { email.nextElementSibling.textContent = 'Please enter a valid email.'; valid = false; }
     if (!message.value.trim()) { message.nextElementSibling.textContent = 'Please enter a message.'; valid = false; }
     if (!valid) { status.textContent = 'Please correct the errors above.'; return; }
-    status.textContent = 'Message ready. Configure backend to send emails.';
+
+    if (!endpoint) {
+      // Fallback: open mailto with prefilled subject/body
+      const subject = encodeURIComponent('Portfolio Inquiry');
+      const body = encodeURIComponent(`Name: ${name.value}\nEmail: ${email.value}\n\n${message.value}`);
+      window.location.href = `mailto:perezjazaelr@gmail.com?subject=${subject}&body=${body}`;
+      status.textContent = 'Opening your email client...';
+      return;
+    }
+
+    // Submit via fetch to endpoint (e.g., Formspree)
+    status.textContent = 'Sending...';
+    submitBtn && (submitBtn.disabled = true);
+
+    const payload = new FormData(form);
+    fetch(endpoint, {
+      method: 'POST',
+      body: payload,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(async (res) => {
+      if (res.ok) {
+        status.textContent = 'Thanks! Your message has been sent.';
+        form.reset();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        if (data && data.errors && Array.isArray(data.errors)) {
+          status.textContent = data.errors.map((e) => e.message).join(', ');
+        } else {
+          status.textContent = 'Sorry, there was a problem sending your message.';
+        }
+      }
+    })
+    .catch(() => {
+      status.textContent = 'Network error. Please try again later.';
+    })
+    .finally(() => {
+      submitBtn && (submitBtn.disabled = false);
+    });
   });
 }
 
@@ -159,7 +200,19 @@ class Chatbot {
       'hi': 'Hi there! I\'m your FAQ assistant. Feel free to ask me anything about Jazael\'s work, skills, or experience.',
       'thanks': 'You\'re welcome! Is there anything else you\'d like to know about Jazael\'s portfolio?',
       'thank you': 'You\'re welcome! Feel free to ask more questions about Jazael\'s work and experience.',
-      'bye': 'Goodbye! Feel free to come back if you have more questions. Good luck with your project!'
+      'bye': 'Goodbye! Feel free to come back if you have more questions. Good luck with your project!',
+
+      // Additional FAQs
+      'availability': 'I\'m currently available for freelance and internship opportunities. Share your timeline and scope to get started.',
+      'rates': 'Rates depend on project scope, timeline, and deliverables. Share details via the contact form and I\'ll provide an estimate.',
+      'timeline': 'Typical small sites take 1-2 weeks; larger projects vary based on scope and revisions.',
+      'tools': 'My toolkit includes VS Code, Figma, Git, GitHub, and Adobe tools. I\'m comfortable with modern web workflows.',
+      'resume': 'You can download my resume from the navigation bar under “Resume.”',
+      'social': 'You can reach me via the contact form. Social links can be shared on request.',
+      'languages': 'I speak English and Filipino.',
+      'freelance': 'Yes, I accept freelance work. Send your project details through the contact form.',
+      'collaboration': 'I collaborate using GitHub, Figma, and common PM tools like Trello or Notion as needed.',
+      'revisions': 'I typically include 1-2 revision rounds depending on the package. Extra rounds can be added.'
     };
 
     this.init();
@@ -246,41 +299,40 @@ class Chatbot {
 
   getResponse(message) {
     const lowerMessage = message.toLowerCase();
-    
-    // Check for exact matches first
-    for (const [key, response] of Object.entries(this.faqData)) {
-      if (lowerMessage.includes(key)) {
-        return response;
+
+    // Synonym map to keys in faqData
+    const intents = [
+      { keys: ['skill', 'stack', 'technology', 'tech'], answer: 'skills' },
+      { keys: ['experience', 'work history', 'background'], answer: 'experience' },
+      { keys: ['project', 'portfolio', 'work samples'], answer: 'projects' },
+      { keys: ['service', 'offer', 'what can you do'], answer: 'services' },
+      { keys: ['contact', 'reach', 'email', 'get in touch'], answer: 'contact' },
+      { keys: ['where', 'location', 'based'], answer: 'location' },
+      { keys: ['how old', 'age'], answer: 'age' },
+      { keys: ['availability', 'available', 'book', 'schedule'], answer: 'availability' },
+      { keys: ['rate', 'price', 'pricing', 'cost', 'budget'], answer: 'rates' },
+      { keys: ['timeline', 'turnaround', 'how long'], answer: 'timeline' },
+      { keys: ['tool', 'software'], answer: 'tools' },
+      { keys: ['resume', 'cv'], answer: 'resume' },
+      { keys: ['social', 'linkedin', 'github'], answer: 'social' },
+      { keys: ['language', 'speak'], answer: 'languages' },
+      { keys: ['freelance', 'contract'], answer: 'freelance' },
+      { keys: ['collaborate', 'collaboration'], answer: 'collaboration' },
+      { keys: ['revision', 'revisions'], answer: 'revisions' },
+      { keys: ['help', 'how does this', 'what can you answer'], answer: 'help' },
+      { keys: ['hello', 'hey', 'hi'], answer: 'hello' },
+      { keys: ['thank', 'thanks'], answer: 'thanks' },
+      { keys: ['bye', 'goodbye'], answer: 'bye' }
+    ];
+
+    for (const intent of intents) {
+      if (intent.keys.some((k) => lowerMessage.includes(k))) {
+        return this.faqData[intent.answer] || this.faqData.help;
       }
-    }
-
-    // Check for common question patterns
-    if (lowerMessage.includes('what') || lowerMessage.includes('tell me about')) {
-      if (lowerMessage.includes('skill') || lowerMessage.includes('technology')) {
-        return this.faqData.skills;
-      } else if (lowerMessage.includes('experience') || lowerMessage.includes('work')) {
-        return this.faqData.experience;
-      } else if (lowerMessage.includes('project')) {
-        return this.faqData.projects;
-      } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach')) {
-        return this.faqData.contact;
-      }
-    }
-
-    if (lowerMessage.includes('how') && lowerMessage.includes('contact')) {
-      return this.faqData.contact;
-    }
-
-    if (lowerMessage.includes('where') && lowerMessage.includes('from')) {
-      return this.faqData.location;
-    }
-
-    if (lowerMessage.includes('how old')) {
-      return this.faqData.age;
     }
 
     // Default response for unrecognized questions
-    return "I'm not sure about that specific question, but I can help you learn about Jazael's skills, experience, projects, services, education, and how to contact him. What would you like to know?";
+    return "I'm not sure about that specific question. You can ask about skills, services, projects, experience, availability, rates, or how to contact me.";
   }
 }
 

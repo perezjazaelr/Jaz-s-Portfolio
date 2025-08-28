@@ -37,7 +37,6 @@
   </header>
   <main class="container">
     <section id="hero" class="hero">
-      <img class="reveal" data-animate="scale-in" data-onload data-stagger-index="0" src="assets/img/avatars/jazs.png" alt="Photo of Jazael Remuel Perez" />
       <div>
         <h1 class="typewriter" data-typewriter="Hi, I'm Jazael Remuel Perez">Hi, I'm Jazael Remuel Perez</h1>
         <p class="reveal" data-animate="fade-up" data-onload data-stagger-index="1">Front-end Developer</p>
@@ -149,6 +148,8 @@
     <section id="contact" class="contact reveal" data-animate="fade-up">
       <h2>Contact</h2>
       <form id="contact-form" novalidate aria-describedby="form-status">
+        <!-- Optional: set your submission endpoint (Formspree or your API). Leave blank to use mailto fallback. -->
+        <input type="hidden" id="contact-endpoint" value="https://formspree.io/f/mwpnpeqn" />
         <div class="form-row">
           <label for="name">Name</label>
           <input id="name" name="name" type="text" required autocomplete="name" />
@@ -165,8 +166,8 @@
           <small class="error" aria-live="polite"></small>
         </div>
         <div class="form-actions">
-          <button class="btn" type="submit">Send message</button>
-          <a class="btn btn-secondary" href="mailto:you@example.com">Email me</a>
+          <button class="btn" type="submit" id="contact-submit">Send message</button>
+          <a class="btn btn-secondary" href="mailto:perezjazaelr@gmail.com">Email me</a>
         </div>
         <p id="form-status" class="muted" aria-live="polite"></p>
       </form>
