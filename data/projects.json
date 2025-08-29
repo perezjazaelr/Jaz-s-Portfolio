@@ -5,5 +5,12 @@
     "url": "https://lambesourus.netlify.app/",
     "tags": ["PHP", "Web Development", "Education", "Tutorials", "Backend"],
     "image": "assets/img/projects/lambepic.png"
+  },
+  {
+    "title": "TalkHive",
+    "description": "TalkHive is a decentralized forum where users can create posts, comment, and vote. The platform runs entirely in your browser and uses localStorage, meaning there is no server involved. This makes it a unique, serverless alternative to traditional forum websites.",
+    "url": "https://illustrious-sfogliatella-2f450e.netlify.app/#/feed",
+    "tags": ["Front-end", "Web Development", "Forum", "Backend"],
+    "image": "assets/img/projects/talkhive.png"
   }
 ]
