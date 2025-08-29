@@ -27,17 +27,34 @@ if (menuToggleButton) {
 
 // Theme toggle (light/dark) with localStorage persistence
 const themeToggle = document.getElementById('theme-toggle');
+console.log('Theme toggle element found:', themeToggle); // Debug log
+
 const applyTheme = (mode) => {
   document.documentElement.dataset.theme = mode;
   localStorage.setItem('theme', mode);
+  console.log('Theme applied:', mode); // Debug log
+  
+  // Update button text to show current theme
+  if (themeToggle) {
+    themeToggle.textContent = mode === 'dark' ? '🌙 Dark' : '☀️ Light';
+    console.log('Button text updated to:', themeToggle.textContent); // Debug log
+  }
 };
-const preferred = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'dark');
+
+const preferred = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+console.log('Preferred theme:', preferred); // Debug log
 applyTheme(preferred);
+
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
-    const next = (document.documentElement.dataset.theme === 'dark') ? 'light' : 'dark';
+    const current = document.documentElement.dataset.theme || 'dark';
+    const next = (current === 'dark') ? 'light' : 'dark';
+    console.log('Theme toggle clicked. Current:', current, 'Next:', next); // Debug log
     applyTheme(next);
   });
+  console.log('Theme toggle event listener added'); // Debug log
+} else {
+  console.error('Theme toggle button not found!'); // Debug log
 }
 
 // Smooth scroll and active section highlighting
@@ -339,6 +356,39 @@ class Chatbot {
 // Initialize chatbot when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   new Chatbot();
+  
+  // Mobile-specific optimizations
+  if (window.innerWidth <= 768) {
+    // Add touch-friendly behavior
+    document.body.classList.add('mobile-device');
+    
+    // Optimize scroll performance on mobile
+    let ticking = false;
+    const updateScroll = () => {
+      ticking = false;
+    };
+    
+    const requestTick = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    };
+    
+    // Use passive scroll listeners for better mobile performance
+    window.addEventListener('scroll', requestTick, { passive: true });
+    
+    // Add mobile-specific touch feedback
+    document.querySelectorAll('.btn, .stack-item, .service-card, .project-card, .timeline-card').forEach(element => {
+      element.addEventListener('touchstart', function() {
+        this.style.transform = 'scale(0.98)';
+      }, { passive: true });
+      
+      element.addEventListener('touchend', function() {
+        this.style.transform = '';
+      }, { passive: true });
+    });
+  }
 });
 
 // Scroll-triggered animations using IntersectionObserver

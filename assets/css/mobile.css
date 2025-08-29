@@ -1,0 +1,778 @@
+/* ===================== MOBILE APP-LIKE UI ===================== */
+
+/* Mobile-first responsive design with app-like behavior */
+@media (max-width: 768px) {
+  
+  /* ===================== MOBILE HEADER & NAVIGATION ===================== */
+  
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+    background: rgba(11, 15, 23, 0.95);
+    border-bottom: 1px solid var(--border);
+    min-height: 60px;
+    transition: all 0.3s ease;
+  }
+
+  [data-theme="light"] .site-header {
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .site-header .container {
+    min-height: 60px;
+    padding: 0 16px;
+    gap: 8px;
+  }
+
+  .site-header .brand {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* Mobile navigation menu */
+  .site-header .nav {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 20px 16px;
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    transform: translateY(-100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  [data-theme="light"] .site-header .nav {
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .menu-toggle[aria-expanded="true"] ~ .nav {
+    display: flex;
+    transform: translateY(0);
+  }
+
+  .site-header .nav a {
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: transparent;
+    transition: all 0.2s ease;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid transparent;
+  }
+
+  .site-header .nav a:hover,
+  .site-header .nav a.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    transform: translateX(8px);
+  }
+
+  /* Mobile menu toggle button */
+  .menu-toggle {
+    display: flex !important;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    font-size: 20px;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+  }
+
+  .menu-toggle:hover {
+    background: #8b6bff;
+    transform: scale(1.05);
+  }
+
+  .menu-toggle:active {
+    transform: scale(0.95);
+  }
+
+  /* Theme toggle button */
+  #theme-toggle {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 12px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+  }
+
+  /* ===================== MOBILE MAIN CONTENT ===================== */
+  
+  main.container {
+    margin-top: 60px;
+    padding: 0 16px;
+  }
+
+  /* Mobile hero section */
+  .hero {
+    padding: 32px 0;
+    text-align: center;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(24px, 8vw, 36px);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 18px;
+    margin-bottom: 32px;
+    color: var(--muted);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    max-width: 280px;
+    height: 56px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 16px;
+    touch-action: manipulation;
+  }
+
+  /* Mobile sections */
+  .section {
+    padding: 40px 0;
+  }
+
+  .section h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  /* Mobile tech stack */
+  .tech-stack-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 0;
+  }
+
+  .stack-item {
+    padding: 24px 16px;
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+  }
+
+  .stack-item:active {
+    transform: scale(0.95);
+  }
+
+  .stack-item svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+  }
+
+  .stack-item span {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  /* Mobile services */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .service-card {
+    padding: 24px 20px;
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+  }
+
+  .service-card:active {
+    transform: scale(0.98);
+  }
+
+  .service-card h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Mobile projects */
+  .projects {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0;
+  }
+
+  .project-card {
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+  }
+
+  .project-card:active {
+    transform: scale(0.98);
+  }
+
+  .project-card img {
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+
+  .project-card h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .project-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .project-card .tags {
+    margin-bottom: 20px;
+  }
+
+  .project-card .btn {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  /* Mobile experience timeline */
+  .timeline {
+    padding: 0;
+  }
+
+  .timeline-card {
+    padding: 24px 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+  }
+
+  .timeline-card:active {
+    transform: scale(0.98);
+  }
+
+  .timeline-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .timeline-card p.muted {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .timeline-card ul {
+    padding-left: 20px;
+  }
+
+  .timeline-card li {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  /* Mobile contact form */
+  .contact {
+    padding: 40px 0;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  .form-row label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .form-row input,
+  .form-row textarea {
+    width: 100%;
+    height: 56px;
+    border-radius: 12px;
+    font-size: 16px;
+    padding: 0 20px;
+    transition: all 0.2s ease;
+  }
+
+  .form-row textarea {
+    height: 120px;
+    padding: 20px;
+    resize: vertical;
+  }
+
+  .form-row input:focus,
+  .form-row textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    height: 56px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    touch-action: manipulation;
+  }
+
+  /* Mobile footer */
+  .site-footer {
+    padding: 32px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  /* ===================== MOBILE CHATBOT ===================== */
+  
+  .chatbot-container {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .chatbot-toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0 4px 20px rgba(124, 92, 255, 0.4);
+    touch-action: manipulation;
+  }
+
+  .chatbot-toggle .chatbot-label {
+    display: none;
+  }
+
+  .chatbot-toggle .chatbot-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .chatbot-interface {
+    position: fixed;
+    bottom: 80px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+    max-height: 70vh;
+    border-radius: 20px;
+    touch-action: manipulation;
+  }
+
+  .chatbot-header {
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .chatbot-header h3 {
+    font-size: 18px;
+  }
+
+  .chatbot-messages {
+    max-height: 50vh;
+    padding: 0 20px;
+  }
+
+  .chatbot-input {
+    padding: 20px;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .chatbot-input input {
+    height: 48px;
+    border-radius: 12px;
+    font-size: 16px;
+    padding: 0 16px;
+  }
+
+  .chatbot-input button {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  /* ===================== MOBILE ANIMATIONS ===================== */
+  
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal[data-animate="fade-up"] {
+    animation: mobileFadeUp 0.6s ease-out;
+  }
+
+  .reveal[data-animate="slide-down"] {
+    animation: mobileSlideDown 0.6s ease-out;
+  }
+
+  .reveal[data-animate="slide-right"] {
+    animation: mobileSlideRight 0.6s ease-out;
+  }
+
+  @keyframes mobileFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes mobileSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes mobileSlideRight {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ===================== MOBILE UTILITIES ===================== */
+  
+  /* Hide elements on mobile */
+  .desktop-only {
+    display: none !important;
+  }
+
+  /* Show elements only on mobile */
+  .mobile-only {
+    display: block !important;
+  }
+
+  /* Touch-friendly spacing */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Mobile scroll behavior */
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Mobile tap highlights */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Mobile focus styles */
+  .btn:focus,
+  input:focus,
+  textarea:focus,
+  .menu-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.3);
+  }
+}
+
+/* ===================== SMALL MOBILE OPTIMIZATIONS ===================== */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .hero {
+    padding: 24px 0;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .section {
+    padding: 32px 0;
+  }
+
+  .section h2 {
+    font-size: 24px;
+  }
+
+  .tech-stack-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stack-item {
+    padding: 20px 16px;
+  }
+
+  .project-card {
+    padding: 16px;
+  }
+
+  .timeline-card {
+    padding: 20px 16px;
+  }
+
+  .form-row input,
+  .form-row textarea {
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .form-row textarea {
+    height: 100px;
+  }
+
+  .form-actions .btn {
+    height: 48px;
+  }
+
+  .chatbot-interface {
+    right: 12px;
+    left: 12px;
+  }
+}
+
+/* ===================== LANDSCAPE MOBILE OPTIMIZATIONS ===================== */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding: 24px 0;
+  }
+
+  .hero h1 {
+    font-size: 24px;
+  }
+
+  .hero p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .hero-actions {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .hero-actions .btn {
+    width: auto;
+    max-width: none;
+    height: 48px;
+    padding: 0 24px;
+  }
+
+  .section {
+    padding: 24px 0;
+  }
+
+  .tech-stack-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chatbot-interface {
+    max-height: 60vh;
+  }
+}
+
+/* ===================== MOBILE DEVICE SPECIFIC STYLES ===================== */
+.mobile-device {
+  /* Mobile-specific optimizations */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.mobile-device .reveal {
+  /* Disable complex animations on mobile for better performance */
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ===================== MOBILE SEARCH BAR HANDLING ===================== */
+/* Hide search bars and search inputs on mobile */
+@media (max-width: 768px) {
+  input[type="search"],
+  .search-bar,
+  .search-input,
+  .search-engine,
+  [class*="search"] {
+    display: none !important;
+  }
+  
+  /* Ensure no search functionality is visible on mobile */
+  .search-container,
+  .search-wrapper {
+    display: none !important;
+  }
+}
+
+/* ===================== MOBILE PERFORMANCE OPTIMIZATIONS ===================== */
+@media (max-width: 768px) {
+  /* Reduce motion for better mobile performance */
+  * {
+    animation-duration: 0.3s !important;
+    transition-duration: 0.2s !important;
+  }
+  
+  /* Optimize images for mobile */
+  img {
+    max-width: 100%;
+    height: auto;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+  }
+  
+  /* Improve touch targets */
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Mobile-friendly focus styles */
+  .btn:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  .menu-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* ===================== MOBILE SAFE AREA SUPPORT ===================== */
+@supports (padding: max(0px)) {
+  @media (max-width: 768px) {
+    .site-header {
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+    }
+    
+    .chatbot-container {
+      bottom: max(16px, env(safe-area-inset-bottom));
+      right: max(16px, env(safe-area-inset-right));
+    }
+    
+    .chatbot-interface {
+      bottom: max(80px, calc(56px + env(safe-area-inset-bottom)));
+      left: max(16px, env(safe-area-inset-left));
+      right: max(16px, env(safe-area-inset-right));
+    }
+  }
+}
+
+/* ===================== MOBILE ACCESSIBILITY IMPROVEMENTS ===================== */
+@media (max-width: 768px) {
+  /* Ensure sufficient color contrast on mobile */
+  .btn,
+  .stack-item,
+  .service-card,
+  .project-card,
+  .timeline-card {
+    color: var(--fg);
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  
+  /* Improve text readability on mobile */
+  p, li, span {
+    line-height: 1.6;
+    word-spacing: 0.05em;
+  }
+  
+  /* Better mobile form accessibility */
+  .form-row label {
+    color: var(--fg);
+    font-weight: 600;
+  }
+  
+  .form-row input::placeholder,
+  .form-row textarea::placeholder {
+    color: var(--muted);
+    opacity: 0.8;
+  }
+  
+  /* Mobile-friendly error messages */
+  .error {
+    color: #ef4444;
+    font-size: 14px;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid #ef4444;
+  }
+}
